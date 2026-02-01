@@ -3,42 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Merge Request: Valentine 2026</title>
+    <title>Special Request for Kenny</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body { font-family: 'Courier New', Courier, monospace; background-color: #0d1117; color: #c9d1d9; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .container { border: 1px solid #30363d; padding: 2rem; border-radius: 6px; background: #161b22; text-align: center; }
-        h1 { color: #58a6ff; }
-        .buttons { margin-top: 20px; position: relative; height: 100px; width: 300px; }
-        button { padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 6px; border: none; font-weight: bold; }
-        #yesBtn { background-color: #238636; color: white; margin-right: 10px; }
-        #noBtn { background-color: #da3633; color: white; position: absolute; }
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe4e1; /* Soft Rose */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+        .card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            z-index: 10;
+        }
+        img {
+            width: 200px;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+        }
+        h1 {
+            color: #d63384;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            height: 50px;
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+        }
+        #yesBtn:hover {
+            transform: scale(1.1);
+            background-color: #ff758f;
+        }
+        #noBtn {
+            background-color: #6c757d;
+            color: white;
+            position: absolute; /* Needed for the jumping effect */
+        }
+        #success-message {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Pull Request: Be My Valentine?</h1>
-        <p><strong>Branch:</strong> <code>feature/date-night</code></p>
-        <p><strong>Reviewer:</strong> [Their Name]</p>
-        <p>Status: <span style="color: #d29922;">Awaiting Approval...</span></p>
-
-        <div class="buttons">
-            <button id="yesBtn" onclick="accepted()">Approve & Merge</button>
-            <button id="noBtn" onmouseover="moveButton()">Close Issue</button>
+    <div class="card" id="mainCard">
+        <img src="https://placebear.com/400/400" alt="Cute Bear">
+        <h1 id="questionText">Kenny, will you be my Valentine?</h1>
+        
+        <div class="btn-container">
+            <button id="yesBtn" onclick="celebrate()">Yes</button>
+            <button id="noBtn" onmouseover="moveNoButton()">No</button>
         </div>
     </div>
 
+    <div class="card" id="success-message">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXpxNHBqbm54Znd4Znd4Znd4Znd4Znd4Znd4Znd4Znd4Znd4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/MDJ9IbxxvDUQM/giphy.gif" alt="Happy Cat">
+        <h1>Yay! ❤️</h1>
+        <p>I knew you couldn't resist. Best deployment ever!</p>
+    </div>
+
     <script>
-        function moveButton() {
+        function moveNoButton() {
             const btn = document.getElementById('noBtn');
+            // Calculate random positions within the visible window
             const x = Math.random() * (window.innerWidth - btn.offsetWidth);
             const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
 
-        function accepted() {
-            document.body.innerHTML = "<div class='container'><h1>✅ Build Succeeded!</h1><p>See you on the 14th. I'll bring the snacks (and the documentation).</p></div>";
+        function celebrate() {
+            // Hide the question card, show the success card
+            document.getElementById('mainCard').style.display = 'none';
+            document.getElementById('success-message').style.display = 'block';
+
+            // Launch Confetti
+            var duration = 15 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+              return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+              var timeLeft = animationEnd - Date.now();
+
+              if (timeLeft <= 0) {
+                return clearInterval(interval);
+              }
+
+              var particleCount = 50 * (timeLeft / duration);
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
         }
     </script>
 </body>
