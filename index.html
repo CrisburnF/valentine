@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Night for Kenny</title>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -166,6 +166,11 @@
     <script>
         let currentScale = 1;
 
+        // 1. Define the custom Heart Shape
+        var heartShape = confetti.shapeFromPath({
+            path: 'M167 72c19,-38 37,-56 75,-56 42,0 76,33 76,75 0,76 -76,151 -151,227 -76,-76 -151,-151 -151,-227 0,-42 33,-75 75,-75 38,0 57,18 76,56z'
+        });
+
         function moveAndGrow() {
             const noBtn = document.getElementById('noBtn');
             const yesBtn = document.getElementById('yesBtn');
@@ -187,22 +192,36 @@
         }
 
         function celebrate() {
-            // Change UI to success state
             document.getElementById('header').innerText = "It's a Date! ❤️";
             document.getElementById('topGif').style.display = 'none';
             document.getElementById('yesBtn').style.display = 'none';
             document.getElementById('noBtn').style.display = 'none';
             document.getElementById('itinerary').style.display = 'block';
 
-            // Heart Confetti Burst
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#ff4d6d', '#ffccd5', '#d63384'],
-                shapes: ['heart'], // This turns the confetti into hearts
-                scalar: 2 // Makes the hearts a little bigger so they are visible
-            });
+            // 2. Launch the Heart Confetti Shower (3 seconds long)
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                
+                // Create the burst
+                confetti({
+                    ...defaults, 
+                    particleCount,
+                    origin: { x: Math.random(), y: Math.random() - 0.2 },
+                    shapes: [heartShape], // Uses the custom heart shape
+                    colors: ['#ff4d6d', '#ff0000', '#ffffff'], // Pink, Red, White
+                    scalar: 2 // Makes the hearts nice and big
+                });
+            }, 250);
         }
     </script>
 </body>
