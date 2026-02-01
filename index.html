@@ -2,277 +2,125 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Special Delivery for Kenny</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Kenny</title>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-
     <style>
-        :root {
-            --primary: #ff4d6d;
-            --secondary: #ffccd5;
-            --bg-gradient: linear-gradient(135deg, #fff0f3 0%, #ffe6e9 100%);
-            --royal-red: #c90e0e;
-            --shadow-soft: 0 20px 60px rgba(255, 77, 109, 0.15);
-            --shadow-hard: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
         body {
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: var(--bg-gradient);
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden; /* Prevent scrolling during animations */
-        }
-
-        /* ====================
-           SCENE 1: THE ROYAL MAIL POSTBOX
-           ==================== */
-        #opening-scene {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--royal-red);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
-        }
-
-        .postbox-container {
-            position: relative;
-            width: 340px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* The Plate */
-        .collection-plate {
-            background: #fdfdfd;
-            width: 220px;
-            padding: 20px;
-            border-radius: 4px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            text-align: center;
-            margin-bottom: 25px;
-            border: 3px solid #1a1a1a;
-            position: relative;
-            z-index: 5;
-        }
-        /* Gold screws effect */
-        .collection-plate::before, .collection-plate::after {
-            content: '';
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: #d4af37; /* Gold */
-            border-radius: 50%;
-            top: 10px;
-        }
-        .collection-plate::before { left: 10px; }
-        .collection-plate::after { right: 10px; }
-
-        .plate-header {
-            font-size: 11px;
-            letter-spacing: 2px;
-            color: #555;
-            border-bottom: 2px solid #1a1a1a;
-            padding-bottom: 8px;
-            margin-bottom: 8px;
-            font-weight: 800;
-        }
-        .plate-text {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--royal-red);
-            text-transform: uppercase;
-            line-height: 1.2;
-        }
-
-        /* The Slot */
-        .postbox-slot {
-            width: 260px;
-            height: 55px;
-            background: #0a0a0a;
-            border-radius: 12px;
-            border-bottom: 2px solid #333;
-            box-shadow: inset 0 5px 15px rgba(0,0,0,0.9), 0 5px 15px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 3;
-        }
-
-        /* The Letter */
-        .envelope {
-            position: absolute;
-            top: 100px; /* Starts hidden behind/aligned with slot */
-            width: 200px;
-            height: 130px;
-            background: white;
-            border-radius: 4px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2; /* Behind slot initially */
-            transform-origin: center;
-            animation: deliverLetter 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s forwards;
-        }
-        
-        .stamp {
-            font-size: 50px;
-            filter: drop-shadow(0 2px 4px rgba(255, 77, 109, 0.3));
-        }
-
-        /* ====================
-           SCENE 2: THE MAIN CARD
-           ==================== */
-        .card-container {
-            perspective: 1000px; /* Enable 3D space */
-            opacity: 0;
-            animation: showCard 0.8s ease-out 2.8s forwards;
-            z-index: 10;
+            background-color: #ffe6e9; /* Soft Pink Background */
+            font-family: 'Varela Round', sans-serif;
+            overflow-x: hidden;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.95);
+            background: white;
             padding: 2.5rem;
-            border-radius: 40px;
-            box-shadow: var(--shadow-soft);
+            border-radius: 35px;
+            /* The specific pink glow from your screenshots */
+            box-shadow: 0 20px 60px rgba(255, 110, 140, 0.4);
             text-align: center;
-            width: 90vw;
-            max-width: 440px; 
-            min-height: 600px; 
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            width: 90%;
+            max-width: 400px; 
+            min-height: 550px; 
+            z-index: 10;
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
-            backdrop-filter: blur(10px);
-            /* Smooth transition for the 3D tilt effect */
-            transition: transform 0.1s ease-out; 
-            transform-style: preserve-3d;
+            transition: height 0.3s ease;
         }
 
         .main-img {
             width: 100%;
-            max-width: 260px;
-            border-radius: 25px;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow-hard);
-            transform: translateZ(20px); /* Pops out in 3D */
+            max-width: 220px;
+            margin-bottom: 1rem;
         }
 
         h1 {
-            color: var(--primary);
+            color: #ff5d8f; /* Hot Pink Text */
             font-size: 1.8rem;
-            margin: 0.5rem 0 1.5rem 0;
-            font-weight: 800;
-            line-height: 1.3;
-            transform: translateZ(30px);
+            margin: 1rem 0;
+            line-height: 1.4;
         }
 
-        /* Buttons */
-        .btn-group {
-            display: flex;
-            gap: 15px; /* Keeps buttons apart initially */
-            margin-top: 10px;
-            transform: translateZ(40px);
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            height: 60px;
-        }
-
+        /* BUTTONS */
         #yesBtn {
-            background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
+            background-color: #ff4d6d;
             color: white;
-            padding: 16px 45px;
-            font-size: 1.1rem;
-            font-weight: 700;
+            padding: 16px 50px; /* Big wide button like the reel */
+            font-size: 1.3rem;
+            font-weight: bold;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.4);
-            transition: all 0.2s ease;
-            position: relative;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.4);
+            transition: transform 0.2s ease, background 0.2s;
             z-index: 20;
-            /* Heartbeat animation */
-            animation: pulse 2s infinite;
+            margin-top: 20px;
+            margin-bottom: 15px;
         }
-        #yesBtn:active { transform: scale(0.95); }
+        #yesBtn:hover {
+            transform: scale(1.05);
+            background-color: #e63950;
+        }
 
         #noBtn {
-            background-color: #f1f3f5;
-            color: #868e96;
+            background-color: #727a87; /* Dark Grey */
+            color: white;
             padding: 12px 30px;
             font-size: 1rem;
-            font-weight: 600;
-            border: 1px solid #dee2e6;
+            font-weight: bold;
+            border: none;
             border-radius: 50px;
             cursor: pointer;
-            position: absolute; /* Allows it to move freely */
-            transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: absolute; 
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
             z-index: 15;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            /* Start position (relative to parent) */
-            right: 15%; 
+            top: 480px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
-        /* ====================
-           ITINERARY (TICKET STYLE)
-           ==================== */
+        /* ITINERARY STYLES */
         .itinerary {
             display: none;
             width: 100%;
-            margin-top: 20px;
-            transform: translateZ(25px);
+            margin-top: 10px;
+            animation: fadeIn 0.8s ease-out;
         }
 
         .itinerary-header {
-            color: #adb5bd;
-            font-size: 0.75rem;
+            color: #ff9eb5;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 25px;
-            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
 
         .event-link {
             text-decoration: none;
             color: inherit;
             display: block;
-            margin-bottom: 20px;
-            opacity: 0; /* Hidden for animation */
-            animation: slideUp 0.6s ease-out forwards;
+            margin-bottom: 15px;
+            transition: transform 0.2s;
         }
-        /* Stagger animation delay */
-        .event-link:nth-child(2) { animation-delay: 0.1s; }
-        .event-link:nth-child(3) { animation-delay: 0.3s; }
+        .event-link:hover {
+            transform: translateY(-5px);
+        }
 
         .event-card {
-            background: white;
+            background: #fff0f3; /* Very light pink card */
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            border: 1px solid rgba(0,0,0,0.03);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-            position: relative;
-        }
-        
-        /* Hover effect: Card lifts up */
-        .event-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.2);
+            text-align: left;
+            border: 1px solid #ffccd5;
         }
 
         .event-img {
@@ -283,151 +131,91 @@
         }
 
         .event-info {
-            padding: 18px;
-            text-align: left;
+            padding: 15px;
         }
 
         .event-time {
-            color: var(--primary);
-            font-weight: 800;
-            font-size: 0.8rem;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: #ff4d6d;
+            font-weight: bold;
+            font-size: 0.85rem;
+            background: white;
             display: inline-block;
-            background: #fff0f3;
             padding: 4px 8px;
-            border-radius: 6px;
+            border-radius: 8px;
+            margin-bottom: 5px;
         }
 
         .event-title {
             font-size: 1.1rem;
-            font-weight: 700;
-            color: #212529;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 5px;
         }
 
         .footer-text {
-            color: var(--primary);
-            font-weight: 700;
-            margin-top: 25px;
+            color: #ff4d6d;
+            font-weight: bold;
+            margin-top: 15px;
             font-size: 1.1rem;
-            opacity: 0;
-            animation: slideUp 0.6s ease-out 0.5s forwards;
         }
 
-        /* ====================
-           KEYFRAMES
-           ==================== */
-        /* Letter drops, pauses at slot, then pushed through */
-        @keyframes deliverLetter {
-            0% { transform: translateY(0) scale(1); z-index: 1; }
-            30% { transform: translateY(140px) scale(1); z-index: 1; } /* At slot */
-            40% { transform: translateY(140px) scale(0.9); z-index: 4; } /* Pushed in (smaller) */
-            50% { transform: translateY(180px) rotate(5deg) scale(1); z-index: 4; } /* Falling out */
-            100% { transform: translateY(120vh) rotate(15deg) scale(1.2); z-index: 4; } /* Gone */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        @keyframes showCard {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 77, 109, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 77, 109, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 77, 109, 0); }
-        }
-
     </style>
 </head>
 <body>
 
-    <div id="opening-scene">
-        <div class="postbox-container">
-            <div class="collection-plate">
-                <div class="plate-header">ROYAL MAIL</div>
-                <div class="plate-text">SPECIAL DELIVERY<br>FOR KENNY</div>
-            </div>
-            <div class="postbox-slot"></div>
-            <div class="envelope">
-                <div class="stamp">💌</div>
-            </div>
-        </div>
-    </div>
+    <div class="card" id="mainCard">
+        <img id="topGif" src="https://media.tenor.com/Images/Love-Sticker.gif" alt="Cute Cat" class="main-img" style="display:block;">
+        
+        <img id="successImg" src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Kisses" class="main-img" style="display:none;">
 
-    <div class="card-container" id="tiltContainer">
-        <div class="card" id="mainCard">
-            
-            <img id="topGif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3NueTZvcm01YnNmemJ6Z3d3dHV5Z3QyeXBxeG9hbmx1b/KztT2c4u8mYYUiMKdJ/giphy.gif" alt="Cat Heart" class="main-img">
-            
-            <h1 id="header">Kenny, will you be my Valentine?</h1>
-            
-            <div class="btn-group" id="btnGroup">
-                <button id="yesBtn" onclick="celebrate()">Yes</button>
-                <button id="noBtn" onmouseover="moveAndGrow()" onclick="moveAndGrow()">No</button>
-            </div>
+        <h1 id="header">Kenny,<br>will you be my Valentine?</h1>
+        
+        <button id="yesBtn" onclick="celebrate()">Yes</button>
+        <button id="noBtn" onmouseover="moveAndGrow()" onclick="moveAndGrow()">No</button>
 
-            <div class="itinerary" id="itinerary">
-                <div class="itinerary-header">Your Ticket for Feb 14th</div>
-                
-                <a href="https://www.instagram.com/" target="_blank" class="event-link">
-                    <div class="event-card">
-                        <img src="https://media.feverup.com/image/upload/f_auto,w_800,c_fill/v1681285818/Header01_4096_hfbbab.jpg" alt="Candlelight Concert" class="event-img">
-                        <div class="event-info">
-                            <div class="event-time">8:30 PM</div>
-                            <div class="event-title">🕯️ Candlelight Concert</div>
-                        </div>
+        <div class="itinerary" id="itinerary">
+            <div class="itinerary-header">Date Itinerary</div>
+            
+            <a href="https://www.instagram.com/" target="_blank" class="event-link">
+                <div class="event-card">
+                    <img src="https://media.feverup.com/image/upload/f_auto,w_800,c_fill/v1681285818/Header01_4096_hfbbab.jpg" alt="Concert" class="event-img">
+                    <div class="event-info">
+                        <div class="event-time">8:30 PM</div>
+                        <div class="event-title">🕯️ Candlelight Concert</div>
                     </div>
-                </a>
+                </div>
+            </a>
 
-                <a href="https://www.instagram.com/" target="_blank" class="event-link">
-                    <div class="event-card">
-                        <img src="https://i0.wp.com/thegourmetboys.com/wp-content/uploads/2026/01/cover-no-logo.jpg?fit=1024%2C536&ssl=1" alt="Six By Nico Dinner" class="event-img">
-                        <div class="event-info">
-                            <div class="event-time">9:45 PM</div>
-                            <div class="event-title">🍽️ Dinner at SIXbyNICO</div>
-                        </div>
+            <a href="https://www.instagram.com/" target="_blank" class="event-link">
+                <div class="event-card">
+                    <img src="https://i0.wp.com/thegourmetboys.com/wp-content/uploads/2026/01/cover-no-logo.jpg?fit=1024%2C536&ssl=1" alt="Dinner" class="event-img">
+                    <div class="event-info">
+                        <div class="event-time">9:45 PM</div>
+                        <div class="event-title">🍽️ Dinner at SIXbyNICO</div>
                     </div>
-                </a>
+                </div>
+            </a>
 
-                <div class="footer-text">I can't wait! ❤️</div>
-            </div>
+            <div class="footer-text">Can't wait! ❤️</div>
         </div>
     </div>
 
     <script>
-        // 1. INTRO ANIMATION HANDLING
-        // Wait 3.5 seconds (letter fall time) then slide the red screen up
-        setTimeout(() => {
-            const scene = document.getElementById('opening-scene');
-            scene.style.transform = 'translateY(-100%)'; // Slide up like a curtain
-        }, 3000);
+        // Use a reliable cute cat GIF source (Tenor/Giphy often block hotlinking, 
+        // so ensure these work or upload your own to GitHub)
+        const startGif = "https://media.tenor.com/Images/Love-Sticker.gif"; // Placeholder for Peach Goma
+        const endGif = "https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"; // Success Kiss
 
-        // 2. 3D TILT EFFECT FOR DESKTOP
-        const container = document.getElementById('tiltContainer');
-        const card = document.getElementById('mainCard');
+        // Set initial image
+        document.getElementById('topGif').src = "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3NueTZvcm01YnNmemJ6Z3d3dHV5Z3QyeXBxeG9hbmx1bXl6Z3N0byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KztT2c4u8mYYUiMKdJ/giphy.gif";
 
-        container.addEventListener('mousemove', (e) => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        });
-
-        // Reset tilt when mouse leaves
-        container.addEventListener('mouseleave', () => {
-            card.style.transform = `rotateY(0deg) rotateX(0deg)`;
-        });
-
-        // 3. GAME LOGIC
         let currentScale = 1;
+
+        // Heart Shape for Confetti
         var heartShape = confetti.shapeFromPath({
             path: 'M167 72c19,-38 37,-56 75,-56 42,0 76,33 76,75 0,76 -76,151 -151,227 -76,-76 -151,-151 -151,-227 0,-42 33,-75 75,-75 38,0 57,18 76,56z'
         });
@@ -437,52 +225,52 @@
             const yesBtn = document.getElementById('yesBtn');
             const card = document.getElementById('mainCard');
 
-            // Strictly constrain button to card dimensions
-            const padding = 20;
+            // Boundaries
+            const padding = 30;
             const maxX = card.offsetWidth - noBtn.offsetWidth - padding;
             const maxY = card.offsetHeight - noBtn.offsetHeight - padding;
 
-            // Generate new coordinates relative to the card
             const randomX = Math.random() * (maxX - padding) + padding;
             const randomY = Math.random() * (maxY - padding) + padding;
 
-            // Apply absolute positioning relative to card
-            noBtn.style.position = 'absolute';
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
-            noBtn.style.right = 'auto'; // clear initial right styling
-
-            // Grow Yes button
+            
+            // Grow effect
             currentScale += 0.2;
             yesBtn.style.transform = `scale(${currentScale})`;
         }
 
         function celebrate() {
-            // UI Updates
-            const header = document.getElementById('header');
-            header.innerText = "It's a Date! ❤️";
-            header.style.color = "#ff4d6d";
+            // 1. Update Header
+            document.getElementById('header').innerHTML = "Yay! It's a Date! ❤️";
             
-            document.getElementById('topGif').style.display = 'none';
-            document.getElementById('btnGroup').style.display = 'none';
+            // 2. Hide Buttons & Show Itinerary
+            document.getElementById('yesBtn').style.display = 'none';
+            document.getElementById('noBtn').style.display = 'none';
             document.getElementById('itinerary').style.display = 'block';
 
-            // Endless Heart Confetti
+            // 3. Swap GIF to kissing/happy cats
+            const img = document.getElementById('topGif');
+            img.src = "https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"; // Kissing bears/cats
+
+            // 4. Endless Heart Rain
             var duration = 15 * 1000;
             var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 100, zIndex: 0 };
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
             var interval = setInterval(function() {
                 var timeLeft = animationEnd - Date.now();
                 if (timeLeft <= 0) return clearInterval(interval);
 
                 var particleCount = 50 * (timeLeft / duration);
+                
                 confetti({
                     ...defaults, 
                     particleCount,
                     origin: { x: Math.random(), y: Math.random() - 0.2 },
                     shapes: [heartShape],
-                    colors: ['#ff4d6d', '#ff0000', '#ffffff'],
+                    colors: ['#ff4d6d', '#ff9eb5', '#ffffff'],
                     scalar: 4
                 });
             }, 250);
