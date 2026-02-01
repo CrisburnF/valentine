@@ -11,14 +11,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             background: linear-gradient(135deg, #fff0f3 0%, #ffdde1 100%);
             font-family: 'Helvetica Neue', Arial, sans-serif;
-            overflow: hidden;
+            overflow-x: hidden;
         }
         .card {
             background: white;
-            padding: 3rem;
+            padding: 2.5rem;
             border-radius: 40px;
             box-shadow: 0 25px 60px rgba(255, 77, 109, 0.2);
             text-align: center;
@@ -31,20 +31,20 @@
             flex-direction: column;
             align-items: center;
             overflow: hidden;
+            transition: all 0.5s ease;
         }
         .main-img {
             width: 100%;
-            max-width: 300px;
+            max-width: 250px;
             border-radius: 20px;
             margin-bottom: 1rem;
         }
         h1 {
             color: #d63384;
-            font-size: 2.2rem;
-            margin-bottom: 2rem;
-            letter-spacing: -1px;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
         }
-        /* Buttons Group */
+        /* Buttons */
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
@@ -70,38 +70,48 @@
             position: absolute; 
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             z-index: 15;
-            top: 500px;
+            top: 480px;
             left: 235px;
         }
-        /* Itinerary Styling */
+        /* Itinerary Visuals */
         .itinerary {
             display: none;
             width: 100%;
-            margin-top: 20px;
+            animation: fadeIn 1s ease-in;
         }
-        .event-step {
-            display: flex;
-            align-items: center;
-            background: #fffafa;
-            margin: 10px 0;
-            padding: 20px;
+        .event-card {
+            background: #fff;
+            margin: 15px 0;
             border-radius: 20px;
-            border-left: 5px solid #ff4d6d;
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.08);
             text-align: left;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            border: 1px solid #eee;
+        }
+        .event-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .event-info {
+            padding: 15px;
         }
         .event-time {
-            font-weight: 800;
             color: #ff4d6d;
-            font-size: 1.1rem;
-            min-width: 90px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
         }
-        .event-desc {
-            color: #444;
-            font-size: 1.1rem;
-            margin-left: 15px;
+        .event-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin: 5px 0;
         }
-        .highlight { font-weight: bold; color: #333; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -115,15 +125,23 @@
         <button id="noBtn" onmouseover="moveAndGrow()" onclick="moveAndGrow()">No</button>
 
         <div class="itinerary" id="itinerary">
-            <div class="event-step">
-                <div class="event-time">8:30 PM</div>
-                <div class="event-desc">🕯️ <span class="highlight">Candlelight Concert</span><br><small>A magical evening of music</small></div>
+            <div class="event-card">
+                <img src="https://images.unsplash.com/photo-1514306191717-452ec28c7814?auto=format&fit=crop&w=600" alt="Candlelight" class="event-img">
+                <div class="event-info">
+                    <div class="event-time">8:30 PM</div>
+                    <div class="event-title">🕯️ Candlelight Concert</div>
+                </div>
             </div>
-            <div class="event-step">
-                <div class="event-time">9:45 PM</div>
-                <div class="event-desc">🍽️ Dinner at <span class="highlight">SIXbyNICO</span><br><small>The full tasting experience</small></div>
+
+            <div class="event-card">
+                <img src="https://images.unsplash.com/photo-1550966841-3ee39511c33e?auto=format&fit=crop&w=600" alt="Dinner" class="event-img">
+                <div class="event-info">
+                    <div class="event-time">9:45 PM</div>
+                    <div class="event-title">🍽️ Dinner at SIXbyNICO</div>
+                </div>
             </div>
-            <p style="margin-top: 20px; color: #ff4d6d; font-weight: bold;">I can't wait to spend the night with you! ❤️</p>
+
+            <p style="margin-top: 15px; color: #ff4d6d; font-weight: bold; font-size: 1.2rem;">See you there! ❤️</p>
         </div>
     </div>
 
@@ -135,7 +153,6 @@
             const yesBtn = document.getElementById('yesBtn');
             const card = document.getElementById('mainCard');
 
-            // Stay strictly within card padding
             const padding = 40;
             const maxX = card.offsetWidth - noBtn.offsetWidth - padding;
             const maxY = card.offsetHeight - noBtn.offsetHeight - padding;
@@ -146,18 +163,16 @@
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
 
-            currentScale += 0.2;
+            currentScale += 0.25;
             yesBtn.style.transform = `scale(${currentScale})`;
         }
 
         function celebrate() {
-            // UI Changes
             document.getElementById('header').innerText = "It's a Date! ❤️";
             document.getElementById('yesBtn').style.display = 'none';
             document.getElementById('noBtn').style.display = 'none';
             document.getElementById('itinerary').style.display = 'block';
 
-            // Heart Confetti
             var duration = 5 * 1000;
             var animationEnd = Date.now() + duration;
 
