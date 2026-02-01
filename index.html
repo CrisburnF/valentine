@@ -166,7 +166,7 @@
     <script>
         let currentScale = 1;
 
-        // 1. Define the custom Heart Shape
+        // Define the Heart Shape
         var heartShape = confetti.shapeFromPath({
             path: 'M167 72c19,-38 37,-56 75,-56 42,0 76,33 76,75 0,76 -76,151 -151,227 -76,-76 -151,-151 -151,-227 0,-42 33,-75 75,-75 38,0 57,18 76,56z'
         });
@@ -198,8 +198,8 @@
             document.getElementById('noBtn').style.display = 'none';
             document.getElementById('itinerary').style.display = 'block';
 
-            // 2. Launch the Heart Confetti Shower (3 seconds long)
-            var duration = 3 * 1000;
+            // Duration is now 15 seconds
+            var duration = 15 * 1000;
             var animationEnd = Date.now() + duration;
             var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
@@ -212,14 +212,13 @@
 
                 var particleCount = 50 * (timeLeft / duration);
                 
-                // Create the burst
                 confetti({
                     ...defaults, 
                     particleCount,
                     origin: { x: Math.random(), y: Math.random() - 0.2 },
-                    shapes: [heartShape], // Uses the custom heart shape
-                    colors: ['#ff4d6d', '#ff0000', '#ffffff'], // Pink, Red, White
-                    scalar: 2 // Makes the hearts nice and big
+                    shapes: [heartShape], 
+                    colors: ['#ff4d6d', '#ff0000', '#ffffff'],
+                    scalar: 4 // Changed to 4 to make hearts BIGGER
                 });
             }, 250);
         }
