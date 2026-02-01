@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Night for Kenny</title>
+    <title>A Delivery for Kenny</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <style>
         body {
@@ -16,6 +16,66 @@
             font-family: 'Helvetica Neue', Arial, sans-serif;
             overflow-x: hidden;
         }
+
+        /* ====================
+           OPENING SCENE STYLES
+           ==================== */
+        #opening-scene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #2c1e1e; /* Dark wood/door color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            animation: fadeOutScene 1s ease-out 3.5s forwards;
+        }
+
+        .letterbox-container {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            /* Align items to the top so the slot is higher up */
+            align-items: flex-start; 
+            padding-top: 100px;
+        }
+
+        .letterbox-slot {
+            width: 220px;
+            height: 40px;
+            background: #1a1212;
+            border: 4px solid #4a3b3b;
+            border-radius: 5px;
+            box-shadow: inset 0 5px 10px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 2; /* Slot must be in front of the falling letter */
+        }
+
+        .envelope {
+            position: absolute;
+            top: 50px; /* Start just above the slot */
+            width: 180px;
+            height: 120px;
+            background: #fffafa;
+            border: 1px solid #eee;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            z-index: 1; /* Start behind the slot */
+            opacity: 0;
+            animation: deliverLetter 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
+        }
+
+        /* ====================
+           MAIN CARD STYLES
+           ==================== */
         .card {
             background: white;
             padding: 2rem;
@@ -31,6 +91,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            /* Initially hidden, revealed after intro */
+            opacity: 0;
+            animation: fadeInCard 1s ease-out 4s forwards;
         }
         .main-img {
             width: 100%;
@@ -87,6 +150,15 @@
             letter-spacing: 2px;
             margin-bottom: 20px;
         }
+        .event-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.2s ease;
+        }
+        .event-link:hover {
+            transform: translateY(-5px);
+        }
         .event-card {
             background: #fff;
             margin-bottom: 20px;
@@ -124,6 +196,26 @@
             font-weight: bold;
             margin-top: 10px;
         }
+
+        /* ====================
+           ANIMATIONS
+           ==================== */
+        /* The letter falling through the slot */
+        @keyframes deliverLetter {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; z-index: 1;}
+            30% { transform: translateY(60px) rotate(0deg); z-index: 1;} /* Pushing through */
+            35% { z-index: 3; } /* Popping out front */
+            60% { transform: translateY(150px) rotate(5deg); } /* Falling */
+            100% { transform: translateY(600px) rotate(15deg); opacity: 1; z-index: 3;} /* Drop out of frame */
+        }
+        /* Hiding the dark door scene */
+        @keyframes fadeOutScene {
+            to { opacity: 0; visibility: hidden; }
+        }
+        /* Showing the main card */
+        @keyframes fadeInCard {
+            to { opacity: 1; }
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -131,6 +223,14 @@
     </style>
 </head>
 <body>
+
+    <div id="opening-scene">
+        <div class="letterbox-container">
+            <div class="letterbox-slot"></div>
+            <div class="envelope">💌</div>
+        </div>
+    </div>
+
 
     <div class="card" id="mainCard">
         <img id="topGif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3NueTZvcm01YnNmemJ6Z3d3dHV5Z3QyeXBxeG9hbmx1b/KztT2c4u8mYYUiMKdJ/giphy.gif" alt="Cat Heart" class="main-img">
@@ -143,21 +243,25 @@
         <div class="itinerary" id="itinerary">
             <div class="itinerary-header">Date Itinerary</div>
             
-            <div class="event-card">
-                <img src="https://media.feverup.com/image/upload/f_auto,w_800,c_fill/v1681285818/Header01_4096_hfbbab.jpg" alt="Candlelight Concert" class="event-img">
-                <div class="event-info">
-                    <div class="event-time">8:30 PM</div>
-                    <div class="event-title">🕯️ Candlelight Concert</div>
+            <a href="https://www.instagram.com/" target="_blank" class="event-link">
+                <div class="event-card">
+                    <img src="https://media.feverup.com/image/upload/f_auto,w_800,c_fill/v1681285818/Header01_4096_hfbbab.jpg" alt="Candlelight Concert" class="event-img">
+                    <div class="event-info">
+                        <div class="event-time">8:30 PM</div>
+                        <div class="event-title">🕯️ Candlelight Concert</div>
+                    </div>
                 </div>
-            </div>
+            </a>
 
-            <div class="event-card">
-                <img src="https://i0.wp.com/thegourmetboys.com/wp-content/uploads/2026/01/cover-no-logo.jpg?fit=1024%2C536&ssl=1" alt="Six By Nico Dinner" class="event-img">
-                <div class="event-info">
-                    <div class="event-time">9:45 PM</div>
-                    <div class="event-title">🍽️ Dinner at SIXbyNICO</div>
+            <a href="https://www.instagram.com/" target="_blank" class="event-link">
+                <div class="event-card">
+                    <img src="https://i0.wp.com/thegourmetboys.com/wp-content/uploads/2026/01/cover-no-logo.jpg?fit=1024%2C536&ssl=1" alt="Six By Nico Dinner" class="event-img">
+                    <div class="event-info">
+                        <div class="event-time">9:45 PM</div>
+                        <div class="event-title">🍽️ Dinner at SIXbyNICO</div>
+                    </div>
                 </div>
-            </div>
+            </a>
 
             <div class="footer-text">See you there! ❤️</div>
         </div>
@@ -166,7 +270,7 @@
     <script>
         let currentScale = 1;
 
-        // Define the Heart Shape
+        // Define Heart Shape
         var heartShape = confetti.shapeFromPath({
             path: 'M167 72c19,-38 37,-56 75,-56 42,0 76,33 76,75 0,76 -76,151 -151,227 -76,-76 -151,-151 -151,-227 0,-42 33,-75 75,-75 38,0 57,18 76,56z'
         });
@@ -192,13 +296,14 @@
         }
 
         function celebrate() {
+            // Update UI
             document.getElementById('header').innerText = "It's a Date! ❤️";
             document.getElementById('topGif').style.display = 'none';
             document.getElementById('yesBtn').style.display = 'none';
             document.getElementById('noBtn').style.display = 'none';
             document.getElementById('itinerary').style.display = 'block';
 
-            // Duration is now 15 seconds
+            // Launch Heart Burst (15 seconds)
             var duration = 15 * 1000;
             var animationEnd = Date.now() + duration;
             var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
@@ -216,9 +321,9 @@
                     ...defaults, 
                     particleCount,
                     origin: { x: Math.random(), y: Math.random() - 0.2 },
-                    shapes: [heartShape], 
+                    shapes: [heartShape],
                     colors: ['#ff4d6d', '#ff0000', '#ffffff'],
-                    scalar: 4 // Changed to 4 to make hearts BIGGER
+                    scalar: 4
                 });
             }, 250);
         }
