@@ -23,13 +23,14 @@
             box-shadow: 0 20px 50px rgba(255, 77, 109, 0.2);
             text-align: center;
             width: 500px; 
-            min-height: 650px; 
+            min-height: 600px; 
             border: 2px solid #ffccd5;
             z-index: 10;
-            position: relative; /* THIS IS THE ANCHOR */
+            position: relative; /* Anchor for the buttons */
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow: hidden; /* Keeps "No" from leaving the rounded corners */
         }
         .main-img {
             width: 100%;
@@ -41,15 +42,7 @@
             color: #ff4d6d;
             font-size: 1.8rem;
             margin-bottom: 2rem;
-        }
-        /* This keeps the buttons contained */
-        .button-box {
-            position: relative;
-            width: 100%;
-            height: 300px; /* Large area for the No button to move within */
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            user-select: none;
         }
         #yesBtn {
             background-color: #ff4d6d;
@@ -61,8 +54,9 @@
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
-            transition: all 0.2s ease-out;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 20;
+            margin-top: 20px;
         }
         #noBtn {
             background-color: #6c757d;
@@ -73,12 +67,13 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            position: absolute; /* Relative to the .card */
-            transition: 0.1s ease;
+            position: absolute; 
+            /* Smooth sliding transition */
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             z-index: 15;
-            /* Start position */
-            top: 50%;
-            left: 70%;
+            /* Default Starting Position inside the card */
+            top: 450px;
+            left: 215px;
         }
         .details {
             text-align: left;
@@ -105,10 +100,8 @@
         
         <h1>Kenny, will you be my Valentine?</h1>
         
-        <div class="button-box">
-            <button id="yesBtn" onclick="celebrate()">Yes</button>
-            <button id="noBtn" onmouseover="moveAndGrow()" onclick="moveAndGrow()">No</button>
-        </div>
+        <button id="yesBtn" onclick="celebrate()">Yes</button>
+        <button id="noBtn" onmouseover="moveAndGrow()" onclick="moveAndGrow()">No</button>
     </div>
 
     <div class="card" id="success-message">
@@ -118,7 +111,7 @@
             <p><strong>🕯️ 8:30 PM:</strong> Candlelight Concert</p>
             <p><strong>🍽️ 9:45 PM:</strong> Dinner at <span class="highlight">SIXbyNICO</span></p>
         </div>
-        <p>Can't wait to see you!</p>
+        <p>I can't wait!</p>
     </div>
 
     <script>
@@ -129,26 +122,22 @@
             const yesBtn = document.getElementById('yesBtn');
             const card = document.getElementById('mainCard');
 
-            // 1. Get card boundaries
-            const cardRect = card.getBoundingClientRect();
-            const btnWidth = noBtn.offsetWidth;
-            const btnHeight = noBtn.offsetHeight;
-
-            // 2. Define safe movement zone (inside the card)
+            // 1. Calculate boundaries based on the CARD'S actual size
+            // We subtract the button size and some padding so it never touches the edge
             const padding = 20;
-            const maxX = card.clientWidth - btnWidth - padding;
-            const maxY = card.clientHeight - btnHeight - padding;
+            const maxX = card.offsetWidth - noBtn.offsetWidth - padding;
+            const maxY = card.offsetHeight - noBtn.offsetHeight - padding;
 
-            // 3. Set random coordinates
+            // 2. Generate random coordinates strictly within 0 and Max
             const randomX = Math.floor(Math.random() * maxX);
             const randomY = Math.floor(Math.random() * maxY);
 
-            // 4. Apply new position relative to the card
+            // 3. Move the button
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
 
-            // 5. Grow the Yes button
-            currentScale += 0.2;
+            // 4. Grow the Yes button
+            currentScale += 0.15;
             yesBtn.style.transform = `scale(${currentScale})`;
         }
 
