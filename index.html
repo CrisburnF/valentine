@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special Request for Kenny</title>
+    <title>A Night for Kenny</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
@@ -12,106 +12,119 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #fff0f3;
+            background: linear-gradient(135deg, #fff0f3 0%, #ffdde1 100%);
             font-family: 'Helvetica Neue', Arial, sans-serif;
             overflow: hidden;
         }
         .card {
             background: white;
-            padding: 2rem;
-            border-radius: 30px;
-            box-shadow: 0 20px 50px rgba(255, 77, 109, 0.2);
+            padding: 3rem;
+            border-radius: 40px;
+            box-shadow: 0 25px 60px rgba(255, 77, 109, 0.2);
             text-align: center;
-            width: 500px; 
-            min-height: 600px; 
-            border: 2px solid #ffccd5;
+            width: 550px; 
+            min-height: 650px; 
+            border: 1px solid rgba(255, 255, 255, 0.3);
             z-index: 10;
-            position: relative; /* Anchor for the buttons */
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow: hidden; /* Keeps "No" from leaving the rounded corners */
+            overflow: hidden;
         }
         .main-img {
             width: 100%;
-            max-width: 280px;
+            max-width: 300px;
             border-radius: 20px;
             margin-bottom: 1rem;
         }
         h1 {
-            color: #ff4d6d;
-            font-size: 1.8rem;
+            color: #d63384;
+            font-size: 2.2rem;
             margin-bottom: 2rem;
-            user-select: none;
+            letter-spacing: -1px;
         }
+        /* Buttons Group */
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
-            padding: 15px 35px;
-            font-size: 1.2rem;
+            padding: 18px 45px;
+            font-size: 1.3rem;
             font-weight: bold;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 20;
-            margin-top: 20px;
         }
         #noBtn {
-            background-color: #6c757d;
-            color: white;
-            padding: 12px 25px;
+            background-color: #f8f9fa;
+            color: #6c757d;
+            padding: 12px 28px;
             font-size: 1rem;
             font-weight: bold;
-            border: none;
+            border: 1px solid #dee2e6;
             border-radius: 50px;
             cursor: pointer;
             position: absolute; 
-            /* Smooth sliding transition */
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             z-index: 15;
-            /* Default Starting Position inside the card */
-            top: 450px;
-            left: 215px;
+            top: 500px;
+            left: 235px;
         }
-        .details {
-            text-align: left;
-            background: #fffafa;
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px dashed #ff4d6d;
-            margin-top: 20px;
-            width: 90%;
-        }
-        #success-message {
+        /* Itinerary Styling */
+        .itinerary {
             display: none;
+            width: 100%;
+            margin-top: 20px;
         }
-        .highlight {
+        .event-step {
+            display: flex;
+            align-items: center;
+            background: #fffafa;
+            margin: 10px 0;
+            padding: 20px;
+            border-radius: 20px;
+            border-left: 5px solid #ff4d6d;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+        .event-time {
+            font-weight: 800;
             color: #ff4d6d;
-            font-weight: bold;
+            font-size: 1.1rem;
+            min-width: 90px;
         }
+        .event-desc {
+            color: #444;
+            font-size: 1.1rem;
+            margin-left: 15px;
+        }
+        .highlight { font-weight: bold; color: #333; }
     </style>
 </head>
 <body>
 
     <div class="card" id="mainCard">
-        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3NueTZvcm01YnNmemJ6Z3d3dHV5Z3QyeXBxeG9hbmx1bXl6Z3N0byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KztT2c4u8mYYUiMKdJ/giphy.gif" alt="Cat Heart" class="main-img">
+        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3NueTZvcm01YnNmemJ6Z3d3dHV5Z3QyeXBxeG9hbmx1b/KztT2c4u8mYYUiMKdJ/giphy.gif" alt="Cat Heart" class="main-img">
         
-        <h1>Kenny, will you be my Valentine?</h1>
+        <h1 id="header">Kenny, will you be my Valentine?</h1>
         
         <button id="yesBtn" onclick="celebrate()">Yes</button>
         <button id="noBtn" onmouseover="moveAndGrow()" onclick="moveAndGrow()">No</button>
-    </div>
 
-    <div class="card" id="success-message">
-        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXBzMmEzZjF4NzF6bjJ5dXFxYW8yaTFlYXBsam5kcXh6YWFtcHV5diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/EkPicGgIeyNAQ/giphy.gif" alt="Success" class="main-img">
-        <h1>It's a Date! ❤️</h1>
-        <div class="details">
-            <p><strong>🕯️ 8:30 PM:</strong> Candlelight Concert</p>
-            <p><strong>🍽️ 9:45 PM:</strong> Dinner at <span class="highlight">SIXbyNICO</span></p>
+        <div class="itinerary" id="itinerary">
+            <div class="event-step">
+                <div class="event-time">8:30 PM</div>
+                <div class="event-desc">🕯️ <span class="highlight">Candlelight Concert</span><br><small>A magical evening of music</small></div>
+            </div>
+            <div class="event-step">
+                <div class="event-time">9:45 PM</div>
+                <div class="event-desc">🍽️ Dinner at <span class="highlight">SIXbyNICO</span><br><small>The full tasting experience</small></div>
+            </div>
+            <p style="margin-top: 20px; color: #ff4d6d; font-weight: bold;">I can't wait to spend the night with you! ❤️</p>
         </div>
-        <p>I can't wait!</p>
     </div>
 
     <script>
@@ -122,29 +135,29 @@
             const yesBtn = document.getElementById('yesBtn');
             const card = document.getElementById('mainCard');
 
-            // 1. Calculate boundaries based on the CARD'S actual size
-            // We subtract the button size and some padding so it never touches the edge
-            const padding = 20;
+            // Stay strictly within card padding
+            const padding = 40;
             const maxX = card.offsetWidth - noBtn.offsetWidth - padding;
             const maxY = card.offsetHeight - noBtn.offsetHeight - padding;
 
-            // 2. Generate random coordinates strictly within 0 and Max
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
+            const randomX = Math.floor(Math.random() * (maxX - padding) + padding);
+            const randomY = Math.floor(Math.random() * (maxY - padding) + padding);
 
-            // 3. Move the button
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
 
-            // 4. Grow the Yes button
-            currentScale += 0.15;
+            currentScale += 0.2;
             yesBtn.style.transform = `scale(${currentScale})`;
         }
 
         function celebrate() {
-            document.getElementById('mainCard').style.display = 'none';
-            document.getElementById('success-message').style.display = 'flex';
+            // UI Changes
+            document.getElementById('header').innerText = "It's a Date! ❤️";
+            document.getElementById('yesBtn').style.display = 'none';
+            document.getElementById('noBtn').style.display = 'none';
+            document.getElementById('itinerary').style.display = 'block';
 
+            // Heart Confetti
             var duration = 5 * 1000;
             var animationEnd = Date.now() + duration;
 
@@ -154,9 +167,9 @@
 
                 confetti({
                     particleCount: 40,
-                    spread: 70,
+                    spread: 80,
                     origin: { x: Math.random(), y: Math.random() - 0.2 },
-                    colors: ['#ff4d6d', '#ffccd5']
+                    colors: ['#ff4d6d', '#ffccd5', '#ffffff']
                 });
             }, 250);
         }
