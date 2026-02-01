@@ -171,7 +171,6 @@
             const yesBtn = document.getElementById('yesBtn');
             const card = document.getElementById('mainCard');
 
-            // Set boundaries so button stays inside white card
             const padding = 40;
             const maxX = card.offsetWidth - noBtn.offsetWidth - padding;
             const maxY = card.offsetHeight - noBtn.offsetHeight - padding;
@@ -183,7 +182,6 @@
             noBtn.style.top = randomY + 'px';
             noBtn.style.transform = 'none';
 
-            // Scale Yes button
             currentScale += 0.2;
             yesBtn.style.transform = `scale(${currentScale})`;
         }
@@ -196,12 +194,14 @@
             document.getElementById('noBtn').style.display = 'none';
             document.getElementById('itinerary').style.display = 'block';
 
-            // Confetti Burst
+            // Heart Confetti Burst
             confetti({
-                particleCount: 150,
+                particleCount: 100,
                 spread: 70,
                 origin: { y: 0.6 },
-                colors: ['#ff4d6d', '#ffccd5', '#ffffff']
+                colors: ['#ff4d6d', '#ffccd5', '#d63384'],
+                shapes: ['heart'], // This turns the confetti into hearts
+                scalar: 2 // Makes the hearts a little bigger so they are visible
             });
         }
     </script>
