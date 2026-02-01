@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special Request for Kenny</title>
+    <title>Merge Request for Kenny</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
@@ -13,68 +13,90 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #ffe4e1; /* Soft Rose */
+            background-color: #fff0f3; /* Very light pink */
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
         }
+
         .card {
             background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
             text-align: center;
             max-width: 400px;
             width: 90%;
             z-index: 10;
+            border: 2px solid #ffccd5;
         }
-        img {
-            width: 200px;
-            border-radius: 15px;
-            margin-bottom: 1.5rem;
+
+        .cat-img {
+            width: 100%;
+            max-width: 250px;
+            border-radius: 20px;
+            margin-bottom: 20px;
         }
+
         h1 {
-            color: #d63384;
+            color: #ff4d6d;
             font-size: 1.8rem;
-            margin-bottom: 2rem;
+            margin-bottom: 30px;
+            line-height: 1.4;
         }
+
         .btn-container {
             display: flex;
             justify-content: center;
             gap: 20px;
-            height: 50px;
+            height: 60px;
+            position: relative;
         }
+
         button {
-            padding: 12px 25px;
-            font-size: 1rem;
+            padding: 15px 35px;
+            font-size: 1.1rem;
             font-weight: bold;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
+
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
         }
+
         #yesBtn:hover {
             transform: scale(1.1);
             background-color: #ff758f;
         }
+
         #noBtn {
-            background-color: #6c757d;
+            background-color: #a4133c;
             color: white;
-            position: absolute; /* Needed for the jumping effect */
+            position: fixed; /* Fixed so it can jump anywhere on the screen */
+            transition: 0.1s; /* Fast movement */
         }
+
         #success-message {
             display: none;
+        }
+
+        .success-text {
+            color: #ff4d6d;
+            font-size: 1.5rem;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
     <div class="card" id="mainCard">
-        <img src="https://placebear.com/400/400" alt="Cute Bear">
-        <h1 id="questionText">Kenny, will you be my Valentine?</h1>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXpxNHBqbm54Znd4Znd4Znd4Znd4Znd4Znd4Znd4Znd4Znd4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/c76IJLufpN96w/giphy.gif" alt="Cartoon Cat Heart" class="cat-img">
+        
+        <h1>Kenny, will you be my Valentine?</h1>
         
         <div class="btn-container">
             <button id="yesBtn" onclick="celebrate()">Yes</button>
@@ -83,47 +105,53 @@
     </div>
 
     <div class="card" id="success-message">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXpxNHBqbm54Znd4Znd4Znd4Znd4Znd4Znd4Znd4Znd4Znd4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/MDJ9IbxxvDUQM/giphy.gif" alt="Happy Cat">
-        <h1>Yay! ❤️</h1>
-        <p>I knew you couldn't resist. Best deployment ever!</p>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXpxNHBqbm54Znd4Znd4Znd4Znd4Znd4Znd4Znd4Znd4Znd4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/MDJ9IbxxvDUQM/giphy.gif" alt="Happy Cat" class="cat-img">
+        <h1 class="success-text">Yay! ❤️<br>Deployment Successful!</h1>
+        <p>I'll see you on the 14th!</p>
     </div>
 
     <script>
         function moveNoButton() {
             const btn = document.getElementById('noBtn');
-            // Calculate random positions within the visible window
-            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            
+            // Generate random positions within the visible viewport
+            // Subtracting 100 to keep the button from going off edge
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
             
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
 
         function celebrate() {
-            // Hide the question card, show the success card
+            // Switch views
             document.getElementById('mainCard').style.display = 'none';
             document.getElementById('success-message').style.display = 'block';
 
-            // Launch Confetti
-            var duration = 15 * 1000;
-            var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+            // Heart-colored confetti celebration
+            var end = Date.now() + (5 * 1000); // 5 seconds of confetti
+            var colors = ['#ff4d6d', '#ffccd5', '#c9184a', '#ffb3c1'];
 
-            function randomInRange(min, max) {
-              return Math.random() * (max - min) + min;
-            }
+            (function frame() {
+              confetti({
+                particleCount: 3,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+                colors: colors
+              });
+              confetti({
+                particleCount: 3,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+                colors: colors
+              });
 
-            var interval = setInterval(function() {
-              var timeLeft = animationEnd - Date.now();
-
-              if (timeLeft <= 0) {
-                return clearInterval(interval);
+              if (Date.now() < end) {
+                requestAnimationFrame(frame);
               }
-
-              var particleCount = 50 * (timeLeft / duration);
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-            }, 250);
+            }());
         }
     </script>
 </body>
