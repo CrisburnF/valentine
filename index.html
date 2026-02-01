@@ -3,154 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Merge Request for Kenny</title>
+    <title>Special Message for Kenny</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
             margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #fff0f3; /* Very light pink */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff0f3;
+            font-family: 'Arial', sans-serif;
             overflow: hidden;
         }
-
         .card {
             background: white;
-            padding: 2.5rem;
-            border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+            padding: 2rem;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.3);
             text-align: center;
-            max-width: 400px;
-            width: 90%;
-            z-index: 10;
+            width: 350px;
             border: 2px solid #ffccd5;
+            z-index: 10;
         }
-
         .cat-img {
             width: 100%;
-            max-width: 250px;
-            border-radius: 20px;
-            margin-bottom: 20px;
+            border-radius: 15px;
+            margin-bottom: 1rem;
         }
-
         h1 {
             color: #ff4d6d;
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            line-height: 1.4;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
         }
-
         .btn-container {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            height: 60px;
+            justify-content: space-around;
             position: relative;
+            height: 50px;
         }
-
         button {
-            padding: 15px 35px;
-            font-size: 1.1rem;
+            padding: 12px 25px;
+            font-size: 1rem;
             font-weight: bold;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: 0.2s;
         }
-
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
         }
-
-        #yesBtn:hover {
-            transform: scale(1.1);
-            background-color: #ff758f;
-        }
-
         #noBtn {
-            background-color: #a4133c;
+            background-color: #6c757d;
             color: white;
-            position: fixed; /* Fixed so it can jump anywhere on the screen */
-            transition: 0.1s; /* Fast movement */
+            position: absolute;
+            left: 180px; /* Initial position */
         }
-
         #success-message {
             display: none;
-        }
-
-        .success-text {
-            color: #ff4d6d;
-            font-size: 1.5rem;
-            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
     <div class="card" id="mainCard">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXpxNHBqbm54Znd4Znd4Znd4Znd4Znd4Znd4Znd4Znd4Znd4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/c76IJLufpN96w/giphy.gif" alt="Cartoon Cat Heart" class="cat-img">
-        
+        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3NueTZvcm01YnNmemJ6Z3d3dHV5Z3QyeXBxeG9hbmx1bXl6Z3N0byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KztT2c4u8mYYUiMKdJ/giphy.gif" alt="Cat Love" class="cat-img">
         <h1>Kenny, will you be my Valentine?</h1>
-        
         <div class="btn-container">
             <button id="yesBtn" onclick="celebrate()">Yes</button>
-            <button id="noBtn" onmouseover="moveNoButton()">No</button>
+            <button id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
         </div>
     </div>
 
     <div class="card" id="success-message">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIycXpxNHBqbm54Znd4Znd4Znd4Znd4Znd4Znd4Znd4Znd4Znd4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/MDJ9IbxxvDUQM/giphy.gif" alt="Happy Cat" class="cat-img">
-        <h1 class="success-text">Yay! ❤️<br>Deployment Successful!</h1>
-        <p>I'll see you on the 14th!</p>
+        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3A5eXp6Z3Z5Z3R5Z3R5Z3R5Z3R5Z3R5Z3R5Z3R5Z3R5Z3R5JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/c76IJLufpN96w/giphy.gif" alt="Success Cat" class="cat-img">
+        <h1>Yay! See you on the 14th! ❤️</h1>
     </div>
 
     <script>
         function moveNoButton() {
             const btn = document.getElementById('noBtn');
+            // Calculate random coordinates
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth - 20);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight - 20);
             
-            // Generate random positions within the visible viewport
-            // Subtracting 100 to keep the button from going off edge
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 100);
-            
+            btn.style.position = 'fixed';
             btn.style.left = x + 'px';
             btn.style.top = y + 'px';
         }
 
         function celebrate() {
-            // Switch views
             document.getElementById('mainCard').style.display = 'none';
             document.getElementById('success-message').style.display = 'block';
 
-            // Heart-colored confetti celebration
-            var end = Date.now() + (5 * 1000); // 5 seconds of confetti
-            var colors = ['#ff4d6d', '#ffccd5', '#c9184a', '#ffb3c1'];
+            // Heart-shaped confetti
+            const end = Date.now() + (5 * 1000);
+            const colors = ['#ff4d6d', '#ffccd5'];
 
             (function frame() {
-              confetti({
-                particleCount: 3,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 },
-                colors: colors
-              });
-              confetti({
-                particleCount: 3,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 },
-                colors: colors
-              });
+                confetti({
+                    particleCount: 2,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: colors
+                });
+                confetti({
+                    particleCount: 2,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: colors
+                });
 
-              if (Date.now() < end) {
-                requestAnimationFrame(frame);
-              }
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
             }());
         }
     </script>
