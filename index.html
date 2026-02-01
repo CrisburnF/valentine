@@ -24,7 +24,7 @@
             text-align: center;
             width: 90%;
             max-width: 450px; 
-            min-height: 550px; 
+            min-height: 600px; 
             border: 1px solid #ffccd5;
             z-index: 10;
             position: relative;
@@ -67,9 +67,9 @@
             border-radius: 50px;
             cursor: pointer;
             position: absolute; 
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
             z-index: 15;
-            top: 450px;
+            top: 480px;
             left: 50%;
             transform: translateX(-50%);
         }
@@ -78,13 +78,14 @@
             display: none;
             width: 100%;
             margin-top: 10px;
+            animation: fadeIn 0.8s ease-out;
         }
         .itinerary-header {
-            color: #888;
-            font-size: 0.9rem;
+            color: #aaa;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
         }
         .event-card {
             background: #fff;
@@ -97,8 +98,9 @@
         }
         .event-img {
             width: 100%;
-            height: 140px;
+            height: 150px;
             object-fit: cover;
+            display: block;
         }
         .event-info {
             padding: 15px;
@@ -113,6 +115,18 @@
             font-size: 1.1rem;
             font-weight: bold;
             color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-text {
+            color: #ff4d6d;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -130,7 +144,7 @@
             <div class="itinerary-header">Date Itinerary</div>
             
             <div class="event-card">
-                <img src="https://images.feverup.com/content/photos/0.17054176657960303.jpg" alt="Candlelight Concert" class="event-img">
+                <img src="https://media.feverup.com/image/upload/f_auto,w_800,c_fill/v1681285818/Header01_4096_hfbbab.jpg" alt="Candlelight Concert" class="event-img">
                 <div class="event-info">
                     <div class="event-time">8:30 PM</div>
                     <div class="event-title">🕯️ Candlelight Concert</div>
@@ -138,12 +152,14 @@
             </div>
 
             <div class="event-card">
-                <img src="https://www.sixbynico.co.uk/wp-content/uploads/2024/12/Lost-in-Paris-Website-Header-scaled.jpg" alt="Six By Nico Lost in Paris" class="event-img">
+                <img src="https://i0.wp.com/thegourmetboys.com/wp-content/uploads/2026/01/cover-no-logo.jpg?fit=1024%2C536&ssl=1" alt="Six By Nico Dinner" class="event-img">
                 <div class="event-info">
                     <div class="event-time">9:45 PM</div>
                     <div class="event-title">🍽️ Dinner at SIXbyNICO</div>
                 </div>
             </div>
+
+            <div class="footer-text">See you there! ❤️</div>
         </div>
     </div>
 
@@ -155,8 +171,8 @@
             const yesBtn = document.getElementById('yesBtn');
             const card = document.getElementById('mainCard');
 
-            // Restrict No button to the card
-            const padding = 30;
+            // Set boundaries so button stays inside white card
+            const padding = 40;
             const maxX = card.offsetWidth - noBtn.offsetWidth - padding;
             const maxY = card.offsetHeight - noBtn.offsetHeight - padding;
 
@@ -167,18 +183,20 @@
             noBtn.style.top = randomY + 'px';
             noBtn.style.transform = 'none';
 
-            // Make Yes button bigger
+            // Scale Yes button
             currentScale += 0.2;
             yesBtn.style.transform = `scale(${currentScale})`;
         }
 
         function celebrate() {
+            // Change UI to success state
             document.getElementById('header').innerText = "It's a Date! ❤️";
             document.getElementById('topGif').style.display = 'none';
             document.getElementById('yesBtn').style.display = 'none';
             document.getElementById('noBtn').style.display = 'none';
             document.getElementById('itinerary').style.display = 'block';
 
+            // Confetti Burst
             confetti({
                 particleCount: 150,
                 spread: 70,
